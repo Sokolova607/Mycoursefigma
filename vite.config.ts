@@ -1,28 +1,22 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
 import path from 'path'
+import tailwindcss from '@tailwindcss/vite'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  // ✅ Название вашего репозитория
-  base: '/Mycoursefigma/',
-
-  plugins: [react()],
-  
+  plugins: [
+    // The React and Tailwind plugins are both required for Make, even if
+    // Tailwind is not being actively used – do not remove them
+    react(),
+    tailwindcss(),
+  ],
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     alias: {
+      // Alias @ to the src directory
       '@': path.resolve(__dirname, './src'),
     },
   },
-  
-  build: {
-    target: 'es2020',
-    outDir: 'dist',
-    emptyOutDir: true,
-  },
-  
-  server: {
-    port: 3000,
-    open: true,
-  },
+
+  // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
+  assetsInclude: ['**/*.svg', '**/*.csv'],
 })
